@@ -19,12 +19,6 @@ provider "github" {
   # provider_config_file = "./rafay_config.json"
 }
 
-resource "rafay_group" "group-Workspace" {  
-  name        = "WrkspAdmin-grp-${var.project_name}"
-  description = "Workspace Admin Group for ${var.project_name}"  
-}
-
-#
 resource "rafay_namespace_network_policy_rule" "demo-withinworkspacerule" {  
   metadata {    
     name    = var.network_policy_rule_name
@@ -39,7 +33,25 @@ resource "rafay_namespace_network_policy_rule" "demo-withinworkspacerule" {
         } 
       }
     }
-    version = "v1"
+    version = var.network_policy_rule_version
+    sharing {
+      enabled = false
+    }
+  }
+}
+
+resource "rafay_namespace_network_policy" "demo-withinworkspacepolicy" {
+  depends_on = [rafay_namespace_network_policy_rule.demo-withinworkspacerule]
+  metadata {
+    name    = var.network_policy_name
+    project = var.project_name
+  }
+  spec {
+    version = var.network_policy_rule_version
+    rules {
+      name = var.network_policy_rule_name
+      version = var.network_policy_rule_version
+    }
     sharing {
       enabled = false
     }
