@@ -57,15 +57,3 @@ resource "rafay_namespace_network_policy" "demo-withinworkspacepolicy" {
     }
   }
 }
-
-resource "rafay_cluster_sharing" "demo-terraform-specific" {
-  depends_on = [rafay_namespace_network_policy.demo-withinworkspacepolicy]
-  clustername = var.cluster_name
-  project     = var.central_pool_name
-  sharing {
-    all = false
-    projects {
-      name = var.project_name
-    }    
-  }
-}
