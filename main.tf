@@ -21,7 +21,7 @@ provider "github" {
 
 resource "rafay_namespace_network_policy_rule" "demo-withinworkspacerule" {  
   metadata {    
-    name    = var.within_ws_ntwrk_rule_name
+    name    = var.within_ws_ntwrk_policy_rule_name
     project = var.project_name    
   }
   spec {
@@ -70,7 +70,7 @@ resource "rafay_namespace_network_policy" "demo-withinworkspacepolicy" {
   spec {
     version = var.network_policy_rule_version
     rules {
-      name = var.within_ws_ntwrk_rule_name
+      name = var.within_ws_ntwrk_policy_rule_name
       version = var.network_policy_rule_version
     }
     sharing {
